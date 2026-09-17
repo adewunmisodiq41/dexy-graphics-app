@@ -1,0 +1,129 @@
+// Prisma schema for Dexy Graphics
+// Datasource: Neon Postgres (set DATABASE_URL in .env)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  ADMIN
+}
+
+enum DesignCategory {
+  LOGOS
+  PEDIGREE
+  BREEDING
+  STUD
+  ANIMATED
+  BRANDING
+}
+
+enum WebCategory {
+  BUSINESS
+  KENNEL
+  ECOMMERCE
+  PORTFOLIO
+  LANDING_PAGE
+  CUSTOM
+}
+
+enum InquiryStatus {
+  NEW
+  IN_PROGRESS
+  DONE
+  ARCHIVED
+}
+
+model AdminUser {
+  id            String   @id @default(cuid())
+  email         String   @unique
+  passwordHash  String
+  name          String?
+  role          Role     @default(ADMIN)
+  createdAt     DateTime @default(now())
+}
+
+model DesignProject {
+  id          String         @id @default(cuid())
+  title       String
+  category    DesignCategory
+  description String
+  imageUrl    String?
+  images      String[]       @default([])
+  published   Boolean        @default(true)
+  order       Int            @default(0)
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+}
+
+model WebProject {
+  id          String      @id @default(cuid())
+  title       String
+  category    WebCategory
+  description String
+  imageUrl    String?
+  liveUrl     String?
+  published   Boolean     @default(true)
+  order       Int         @default(0)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+}
+
+model PrintProduct {
+  id          String   @id @default(cuid())
+  name        String
+  spec        String
+  description String
+  imageUrl    String?
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Testimonial {
+  id          String   @id @default(cuid())
+  clientName  String
+  clientRole  String?
+  quote       String
+  avatarUrl   String?
+  published   Boolean  @default(true)
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Inquiry {
+  id          String        @id @default(cuid())
+  fullName    String
+  email       String
+  whatsapp    String?
+  service     String
+  budget      String?
+  details     String
+  fileUrl     String?
+  status      InquiryStatus @default(NEW)
+  createdAt   DateTime      @default(now())
+}
+
+// Singleton row (id = "settings") holding editable site-wide content
+model SiteSettings {
+  id            String   @id @default("settings")
+  brandName     String   @default("Dexy Graphics")
+  heroHeadline  String   @default("Designing brands. Building websites. Bringing visions to life.")
+  heroSubtext   String   @default("Professional graphic design, modern websites, and custom printing solutions for businesses, brands, and individuals.")
+  aboutName     String   @default("Adewunmi Sodiq")
+  aboutLede     String   @default("I'm Adewunmi Sodiq — the designer and developer behind Dexy Graphics.")
+  aboutBody     String   @default("I create logos, websites, and printed branding that help businesses, breeders, and individuals present themselves with confidence.")
+  email         String   @default("hello@dexygraphics.com")
+  whatsapp      String   @default("+234 000 000 0000")
+  location      String   @default("Lagos, Nigeria")
+  instagramUrl  String?
+  updatedAt     DateTime @updatedAt
+}
