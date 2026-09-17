@@ -104,3 +104,4 @@ replace or delete it from `/admin` once you have real projects and client feedba
 - Portfolio ordering uses a simple `order` field in the database; reordering via drag-and-drop in
   the admin isn't built yet (edit the `order` value directly via Prisma Studio — `npm run
   db:studio` — if you need to resequence).
+
