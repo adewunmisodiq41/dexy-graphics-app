@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import ThemeToggle from "./ThemeToggle";
 
 const BrandMark = ({ className = "mark" }: { className?: string }) => (
   <svg className={className} viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -47,6 +48,7 @@ export default function SiteNav({ brandName }: { brandName: string }) {
             ))}
           </nav>
           <div className="nav-cta">
+            <ThemeToggle />
             <a href="#contact" className="btn btn-solid btn-sm">
               Let&apos;s Work Together
             </a>
@@ -63,6 +65,9 @@ export default function SiteNav({ brandName }: { brandName: string }) {
         <button className="mobile-close" onClick={() => setOpen(false)}>
           Close ✕
         </button>
+        <div className="mobile-theme-row">
+          <ThemeToggle />
+        </div>
         <div className="brand">
           <BrandMark />
           {brandName}

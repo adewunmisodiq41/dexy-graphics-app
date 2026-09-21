@@ -1,7 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import SiteNav from "@/components/SiteNav";
 import Hero from "@/components/Hero";
-import About from "@/components/About";
 import Services from "@/components/Services";
 import PortfolioSection from "@/components/PortfolioSection";
 import WebPortfolio from "@/components/WebPortfolio";
@@ -35,7 +34,6 @@ export default async function Home() {
     <main>
       <SiteNav brandName={settings.brandName} />
       <Hero headline={settings.heroHeadline} subtext={settings.heroSubtext} />
-      <About name={settings.aboutName} lede={settings.aboutLede} body={settings.aboutBody} />
       <Services />
       <PortfolioSection items={design} />
       <WebPortfolio items={web} />

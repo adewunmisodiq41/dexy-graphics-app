@@ -29,18 +29,6 @@ export default async function SettingsAdminPage() {
           <label htmlFor="heroSubtext">Hero supporting text</label>
           <textarea id="heroSubtext" name="heroSubtext" required defaultValue={settings.heroSubtext} />
         </div>
-        <div className="field">
-          <label htmlFor="aboutName">About — your name</label>
-          <input id="aboutName" name="aboutName" required defaultValue={settings.aboutName} />
-        </div>
-        <div className="field">
-          <label htmlFor="aboutLede">About — lede line</label>
-          <textarea id="aboutLede" name="aboutLede" required defaultValue={settings.aboutLede} />
-        </div>
-        <div className="field">
-          <label htmlFor="aboutBody">About — body paragraph</label>
-          <textarea id="aboutBody" name="aboutBody" required defaultValue={settings.aboutBody} />
-        </div>
         <div className="field-row">
           <div className="field">
             <label htmlFor="email">Contact email</label>

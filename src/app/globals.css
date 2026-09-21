@@ -362,5 +362,27 @@ footer{ border-top:1px solid var(--border); padding: 56px 0 30px; }
 .login-shell{ min-height:100vh; display:flex; align-items:center; justify-content:center; background:var(--bg); }
 .login-box{ width:100%; max-width:380px; padding:36px; background:var(--bg-panel); border:1px solid var(--border); border-radius: var(--radius); }
 
+/* ============ THEME TOGGLE ============ */
+.theme-toggle{ background:none; border:none; padding:0; display:flex; align-items:center; flex:none; }
+.theme-toggle-track{
+  width:52px; height:28px; border-radius:999px; border:1.5px solid var(--border-strong);
+  background: var(--bg-sunken); display:flex; align-items:center; padding:2px;
+  transition: background .2s ease, border-color .2s ease;
+}
+.theme-toggle-knob{
+  width:22px; height:22px; border-radius:50%; background: var(--fg); color: var(--bg);
+  display:flex; align-items:center; justify-content:center; flex:none;
+  transform: translateX(0); transition: transform .22s cubic-bezier(.2,.7,.2,1), background .2s ease;
+}
+.theme-toggle-knob svg{ width:14px; height:14px; }
+:root[data-theme="dark"] .theme-toggle-knob{ transform: translateX(24px); }
+@media (max-width: 900px){
+  .theme-toggle{ display: none; }
+}
+.mobile-theme-row{ display:none; }
+@media (max-width: 900px){
+  .mobile-theme-row{ display:flex; margin-bottom:24px; }
+}
+
 ::selection{ background: var(--accent); color:#fff; }
 :focus-visible{ outline: 2px solid var(--accent); outline-offset:2px; }
