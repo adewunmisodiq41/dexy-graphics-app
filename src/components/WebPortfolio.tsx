@@ -1,4 +1,4 @@
-import Image from "next/image";
+import MediaThumb from "./MediaThumb";
 
 export type WebItem = {
   id: string;
@@ -40,7 +40,7 @@ export default function WebPortfolio({ items }: { items: WebItem[] }) {
               </div>
               <div className="browser-screen">
                 {item.imageUrl ? (
-                  <Image src={item.imageUrl} alt={item.title} fill sizes="(max-width:760px) 100vw, 50vw" />
+                  <MediaThumb src={item.imageUrl} alt={item.title} sizes="(max-width:760px) 100vw, 50vw" />
                 ) : (
                   <>
                     <div className="bs-bar w40"></div>

@@ -1,4 +1,4 @@
-import Image from "next/image";
+import MediaThumb from "./MediaThumb";
 import RequestQuoteButton from "./RequestQuoteButton";
 
 export type PrintItem = {
@@ -33,7 +33,7 @@ export default function Printing({ items }: { items: PrintItem[] }) {
             <div className="print-card" key={item.id}>
               {item.imageUrl ? (
                 <div style={{ position: "relative", aspectRatio: "4/3", borderRadius: "var(--radius-sm)", overflow: "hidden" }}>
-                  <Image src={item.imageUrl} alt={item.name} fill sizes="(max-width:600px) 100vw, 33vw" />
+                  <MediaThumb src={item.imageUrl} alt={item.name} sizes="(max-width:600px) 100vw, 33vw" />
                 </div>
               ) : (
                 <svg className="print-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">

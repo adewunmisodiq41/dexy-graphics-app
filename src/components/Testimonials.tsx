@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import Image from "next/image";
+import { isVideoUrl } from "@/lib/media";
 
 export type TestimonialItem = {
   id: string;
@@ -40,7 +40,16 @@ export default function Testimonials({ items }: { items: TestimonialItem[] }) {
                   <p className="testi-quote">&quot;{t.quote}&quot;</p>
                   <div className="testi-who">
                     <div className="testi-avatar">
-                      {t.avatarUrl ? <Image src={t.avatarUrl} alt={t.clientName} width={40} height={40} /> : "—"}
+                      {t.avatarUrl ? (
+                        isVideoUrl(t.avatarUrl) ? (
+                          <video src={t.avatarUrl} muted loop autoPlay playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        ) : (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={t.avatarUrl} alt={t.clientName} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                        )
+                      ) : (
+                        "—"
+                      )}
                     </div>
                     <div>
                       <div className="testi-name">{t.clientName}</div>

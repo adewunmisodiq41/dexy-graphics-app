@@ -3,11 +3,12 @@
 import { useState } from "react";
 import Image from "next/image";
 import { uploadImage } from "@/lib/actions";
+import { isVideoUrl } from "@/lib/media";
 
 export default function ImageUploadField({
   name,
   defaultValue,
-  label = "Image",
+  label = "Image or Video",
 }: {
   name: string;
   defaultValue?: string | null;
@@ -33,21 +34,27 @@ export default function ImageUploadField({
     }
   }
 
+  const video = isVideoUrl(url);
+
   return (
     <div className="field">
       <label>{label}</label>
       <input type="hidden" name={name} value={url} />
       {url && (
-        <div style={{ position: "relative", width: 140, height: 100, marginBottom: 10, borderRadius: 4, overflow: "hidden", border: "1px solid var(--border-strong)" }}>
-          <Image src={url} alt="Preview" fill sizes="140px" style={{ objectFit: "cover" }} />
+        <div style={{ position: "relative", width: 140, height: 100, marginBottom: 10, borderRadius: 4, overflow: "hidden", border: "1px solid var(--border-strong)", background: "var(--bg-sunken)" }}>
+          {video ? (
+            <video src={url} muted loop autoPlay playsInline style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+          ) : (
+            <Image src={url} alt="Preview" fill sizes="140px" style={{ objectFit: "cover" }} />
+          )}
         </div>
       )}
-      <input type="file" accept="image/*" onChange={handleFile} disabled={uploading} />
+      <input type="file" accept="image/*,video/*" onChange={handleFile} disabled={uploading} />
       {uploading && <p className="form-note">Uploading…</p>}
       {error && <p className="form-note" style={{ color: "var(--accent-ink)" }}>{error}</p>}
       {url && (
         <button type="button" className="btn btn-ghost btn-sm" style={{ marginTop: 8 }} onClick={() => setUrl("")}>
-          Remove image
+          Remove {video ? "video" : "image"}
         </button>
       )}
     </div>

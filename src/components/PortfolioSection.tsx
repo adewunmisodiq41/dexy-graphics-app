@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import MediaThumb from "./MediaThumb";
 
 export type DesignItem = {
   id: string;
@@ -66,7 +66,7 @@ export default function PortfolioSection({ items }: { items: DesignItem[] }) {
               <div className="p-card" key={item.id} onClick={() => setActive(item)}>
                 <div className="p-art">
                   {item.imageUrl ? (
-                    <Image src={item.imageUrl} alt={item.title} fill sizes="(max-width:600px) 100vw, 33vw" />
+                    <MediaThumb src={item.imageUrl} alt={item.title} sizes="(max-width:600px) 100vw, 33vw" />
                   ) : (
                     <span className="glyph">{glyphFor(item.title)}</span>
                   )}
@@ -92,7 +92,7 @@ export default function PortfolioSection({ items }: { items: DesignItem[] }) {
             </button>
             <div className="modal-art">
               {active.imageUrl ? (
-                <Image src={active.imageUrl} alt={active.title} fill sizes="640px" />
+                <MediaThumb src={active.imageUrl} alt={active.title} sizes="640px" />
               ) : (
                 <span className="glyph">{glyphFor(active.title)}</span>
               )}
