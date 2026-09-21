@@ -107,8 +107,10 @@ export async function uploadImage(formData: FormData): Promise<{ url?: string; e
   try {
     const blob = await put(`uploads/${Date.now()}-${file.name}`, file, { access: "public" });
     return { url: blob.url };
-  } catch {
-    return { error: "Upload failed — check BLOB_READ_WRITE_TOKEN is set." };
+  } catch (err) {
+    console.error("Blob upload failed:", err);
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return { error: `Upload failed: ${message}` };
   }
 }
 
