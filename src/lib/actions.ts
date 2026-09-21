@@ -51,8 +51,9 @@ export async function submitInquiry(
   const file = formData.get("file") as File | null;
   if (file && file.size > 0) {
     try {
-      const blob = await put(`inquiries/${Date.now()}-${file.name}`, file, {
+           const blob = await put(`inquiries/${Date.now()}-${file.name}`, file, {
         access: "public",
+        storeId: process.env.dexy2_STORE_ID,
       });
       fileUrl = blob.url;
     } catch {
@@ -105,7 +106,10 @@ export async function uploadImage(formData: FormData): Promise<{ url?: string; e
   const file = formData.get("file") as File | null;
   if (!file || file.size === 0) return { error: "No file provided" };
   try {
-    const blob = await put(`uploads/${Date.now()}-${file.name}`, file, { access: "public" });
+       const blob = await put(`uploads/${Date.now()}-${file.name}`, file, {
+      access: "public",
+      storeId: process.env.dexy2_STORE_ID,
+    });
     return { url: blob.url };
   } catch (err) {
     console.error("Blob upload failed:", err);
