@@ -20,9 +20,9 @@ export default function MediaThumb({
         loop
         autoPlay
         playsInline
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "contain" }}
       />
     );
   }
-  return <Image src={src} alt={alt} fill sizes={sizes} />;
+  return <Image src={src} alt={alt} fill sizes={sizes} style={{ objectFit: "contain" }} />;
 }
