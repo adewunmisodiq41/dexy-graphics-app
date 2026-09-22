@@ -304,6 +304,7 @@ const settingsSchema = z.object({
   whatsapp: z.string().min(1),
   location: z.string().min(1),
   instagramUrl: z.string().optional(),
+  logoUrl: z.string().optional(),
 });
 
 export async function saveSettings(formData: FormData) {
@@ -316,6 +317,7 @@ export async function saveSettings(formData: FormData) {
     whatsapp: formData.get("whatsapp"),
     location: formData.get("location"),
     instagramUrl: formData.get("instagramUrl")?.toString() || undefined,
+    logoUrl: formData.get("logoUrl")?.toString() || undefined,
   });
 
   await prisma.siteSettings.upsert({

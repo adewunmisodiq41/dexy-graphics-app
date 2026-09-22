@@ -32,7 +32,7 @@ export default async function Home() {
 
   return (
     <main>
-      <SiteNav brandName={settings.brandName} />
+      <SiteNav brandName={settings.brandName} logoUrl={settings.logoUrl} />
       <Hero headline={settings.heroHeadline} subtext={settings.heroSubtext} />
       <Services />
       <PortfolioSection items={design} />
@@ -41,7 +41,7 @@ export default async function Home() {
       <WhyProcess />
       <Testimonials items={testimonials} />
       <Contact email={settings.email} whatsapp={settings.whatsapp} location={settings.location} />
-      <Footer brandName={settings.brandName} email={settings.email} whatsapp={settings.whatsapp} instagramUrl={settings.instagramUrl} />
+      <Footer brandName={settings.brandName} email={settings.email} whatsapp={settings.whatsapp} instagramUrl={settings.instagramUrl} logoUrl={settings.logoUrl} />
     </main>
   );
 }

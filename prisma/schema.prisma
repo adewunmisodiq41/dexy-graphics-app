@@ -125,5 +125,6 @@ model SiteSettings {
   whatsapp      String   @default("+234 000 000 0000")
   location      String   @default("Lagos, Nigeria")
   instagramUrl  String?
+  logoUrl       String?
   updatedAt     DateTime @updatedAt
 }

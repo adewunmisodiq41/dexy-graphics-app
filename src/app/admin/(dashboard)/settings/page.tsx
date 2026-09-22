@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { saveSettings } from "@/lib/actions";
+import ImageUploadField from "@/components/admin/ImageUploadField";
 
 export const revalidate = 0;
 
@@ -21,6 +22,7 @@ export default async function SettingsAdminPage() {
           <label htmlFor="brandName">Brand name</label>
           <input id="brandName" name="brandName" required defaultValue={settings.brandName} />
         </div>
+        <ImageUploadField name="logoUrl" defaultValue={settings.logoUrl} label="Brand logo / site icon (shown in the header and browser tab)" />
         <div className="field">
           <label htmlFor="heroHeadline">Hero headline</label>
           <textarea id="heroHeadline" name="heroHeadline" required defaultValue={settings.heroHeadline} />

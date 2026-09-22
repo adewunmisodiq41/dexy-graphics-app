@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import ThemeToggle from "./ThemeToggle";
 
 const BrandMark = ({ className = "mark" }: { className?: string }) => (
@@ -14,7 +15,18 @@ const BrandMark = ({ className = "mark" }: { className?: string }) => (
   </svg>
 );
 
-export default function SiteNav({ brandName }: { brandName: string }) {
+function Logo({ logoUrl }: { logoUrl?: string | null }) {
+  if (logoUrl) {
+    return (
+      <span className="mark" style={{ position: "relative", display: "inline-block", overflow: "hidden", borderRadius: 4 }}>
+        <Image src={logoUrl} alt="" fill sizes="26px" style={{ objectFit: "contain" }} />
+      </span>
+    );
+  }
+  return <BrandMark />;
+}
+
+export default function SiteNav({ brandName, logoUrl }: { brandName: string; logoUrl?: string | null }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -37,7 +49,7 @@ export default function SiteNav({ brandName }: { brandName: string }) {
       <header className={`site-nav${scrolled ? " scrolled" : ""}`}>
         <div className="nav-inner">
           <a href="#hero" className="brand">
-            <BrandMark />
+            <Logo logoUrl={logoUrl} />
             {brandName}
           </a>
           <nav className="nav-links">
@@ -69,7 +81,7 @@ export default function SiteNav({ brandName }: { brandName: string }) {
           <ThemeToggle />
         </div>
         <div className="brand">
-          <BrandMark />
+          <Logo logoUrl={logoUrl} />
           {brandName}
         </div>
         <a href="#hero" onClick={() => setOpen(false)}>

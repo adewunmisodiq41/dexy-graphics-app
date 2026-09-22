@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 const BrandMark = () => (
   <svg className="mark" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="13" cy="13" r="11" stroke="currentColor" strokeWidth="1.4" />
@@ -9,16 +11,29 @@ const BrandMark = () => (
   </svg>
 );
 
+function Logo({ logoUrl }: { logoUrl?: string | null }) {
+  if (logoUrl) {
+    return (
+      <span className="mark" style={{ position: "relative", display: "inline-block", overflow: "hidden", borderRadius: 4 }}>
+        <Image src={logoUrl} alt="" fill sizes="26px" style={{ objectFit: "contain" }} />
+      </span>
+    );
+  }
+  return <BrandMark />;
+}
+
 export default function Footer({
   brandName,
   email,
   whatsapp,
   instagramUrl,
+  logoUrl,
 }: {
   brandName: string;
   email: string;
   whatsapp: string;
   instagramUrl?: string | null;
+  logoUrl?: string | null;
 }) {
   const waLink = `https://wa.me/${whatsapp.replace(/[^0-9]/g, "")}`;
   const year = new Date().getFullYear();
@@ -29,7 +44,7 @@ export default function Footer({
         <div className="footer-grid">
           <div className="footer-brand">
             <div className="brand">
-              <BrandMark />
+              <Logo logoUrl={logoUrl} />
               {brandName}
             </div>
             <p>A one-studio creative practice — logo &amp; brand design, kennel and pedigree graphics, web development, and custom printing.</p>
