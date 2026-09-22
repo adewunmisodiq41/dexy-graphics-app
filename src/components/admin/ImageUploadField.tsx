@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { uploadImage } from "@/lib/actions";
+import { put } from "@vercel/blob/client";
 import { isVideoUrl } from "@/lib/media";
 
 export default function ImageUploadField({
@@ -16,21 +16,41 @@ export default function ImageUploadField({
 }) {
   const [url, setUrl] = useState(defaultValue || "");
   const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
 
   async function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
+    setProgress(0);
     setError("");
-    const fd = new FormData();
-    fd.append("file", file);
-    const res = await uploadImage(fd);
-    setUploading(false);
-    if (res.url) {
-      setUrl(res.url);
-    } else {
-      setError(res.error || "Upload failed");
+
+    try {
+      const pathname = `uploads/${Date.now()}-${file.name}`;
+
+      const tokenRes = await fetch("/api/blob-token", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pathname }),
+      });
+      const tokenData = await tokenRes.json();
+      if (!tokenRes.ok || !tokenData.clientToken) {
+        throw new Error(tokenData.error || "Could not get an upload token");
+      }
+
+      const blob = await put(pathname, file, {
+        access: "public",
+        token: tokenData.clientToken,
+        multipart: file.size > 10 * 1024 * 1024,
+        onUploadProgress: (p) => setProgress(Math.round(p.percentage)),
+      });
+
+      setUrl(blob.url);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Upload failed");
+    } finally {
+      setUploading(false);
     }
   }
 
@@ -50,9 +70,11 @@ export default function ImageUploadField({
         </div>
       )}
       <input type="file" accept="image/*,video/*" onChange={handleFile} disabled={uploading} />
-      {uploading && <p className="form-note">Uploading…</p>}
+      {uploading && (
+        <p className="form-note">Uploading… {progress > 0 ? `${progress}%` : ""}</p>
+      )}
       {error && <p className="form-note" style={{ color: "var(--accent-ink)" }}>{error}</p>}
-      {url && (
+      {url && !uploading && (
         <button type="button" className="btn btn-ghost btn-sm" style={{ marginTop: 8 }} onClick={() => setUrl("")}>
           Remove {video ? "video" : "image"}
         </button>
