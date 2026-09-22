@@ -378,7 +378,7 @@ footer{ border-top:1px solid var(--border); padding: 56px 0 30px; }
 .theme-toggle-knob svg{ width:14px; height:14px; }
 :root[data-theme="dark"] .theme-toggle-knob{ transform: translateX(24px); }
 @media (max-width: 900px){
-  .theme-toggle{ display: none; }
+  .nav-cta .theme-toggle{ display: none; }
 }
 .mobile-theme-row{ display:none; }
 @media (max-width: 900px){
