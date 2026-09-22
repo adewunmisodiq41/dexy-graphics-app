@@ -16,7 +16,7 @@ export async function POST(request: Request) {
   try {
     const clientToken = await generateClientTokenFromReadWriteToken({
       pathname,
-      storeId: process.env.dexy2_STORE_ID,
+      token: process.env.dexy2_READ_WRITE_TOKEN,
       allowedContentTypes: ["image/*", "video/*"],
       addRandomSuffix: true,
       maximumSizeInBytes: 200 * 1024 * 1024, // 200MB
