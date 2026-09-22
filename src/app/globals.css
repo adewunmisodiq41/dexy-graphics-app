@@ -272,7 +272,8 @@ header.site-nav.scrolled .nav-inner{ padding-top:14px; padding-bottom:14px; }
 .grid-print{ display:grid; grid-template-columns: repeat(3,1fr); gap:22px; }
 @media (max-width:920px){ .grid-print{ grid-template-columns: repeat(2,1fr); } }
 @media (max-width:600px){ .grid-print{ grid-template-columns: 1fr; } }
-.print-card{ border:1px solid var(--border); border-radius: var(--radius); padding:26px; background: var(--bg-panel); display:flex; flex-direction:column; gap:16px; transition: border-color .2s ease, transform .2s ease; }
+.print-card{ border:1px solid var(--border); border-radius: var(--radius); padding:26px; background: var(--bg-panel); display:flex; flex-direction:column; gap:16px; transition: border-color .2s ease, transform .2s ease; overflow:hidden; }
+.print-card-image{ position:relative; aspect-ratio: 4/3; overflow:hidden; background: var(--bg-sunken); margin: -26px -26px 2px -26px; }
 .print-card:hover{ border-color: var(--border-strong); transform: translateY(-4px); }
 .print-icon{ width:44px; height:44px; color: var(--accent); }
 .print-card h4{ font-size:17px; font-weight:700; }

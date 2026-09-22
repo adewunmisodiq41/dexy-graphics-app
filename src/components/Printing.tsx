@@ -31,15 +31,14 @@ export default function Printing({ items }: { items: PrintItem[] }) {
         <div className="grid-print">
           {items.map((item) => (
             <div className="print-card" key={item.id}>
-              {item.imageUrl ? (
-                <div style={{ position: "relative", aspectRatio: "4/3", borderRadius: "var(--radius-sm)", overflow: "hidden" }}>
+              {item.imageUrl && (
+                <div className="print-card-image">
                   <MediaThumb src={item.imageUrl} alt={item.name} sizes="(max-width:600px) 100vw, 33vw" />
                 </div>
-              ) : (
-                <svg className="print-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
-                  <path d={ICONS[item.name] || DEFAULT_ICON} />
-                </svg>
               )}
+              <svg className="print-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round">
+                <path d={ICONS[item.name] || DEFAULT_ICON} />
+              </svg>
               <div>
                 <h4>{item.name}</h4>
                 <p>{item.description}</p>
