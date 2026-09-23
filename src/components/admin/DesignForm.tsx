@@ -2,6 +2,7 @@
 
 import { saveDesignProject } from "@/lib/actions";
 import ImageUploadField from "@/components/admin/ImageUploadField";
+import MultiImageUploadField from "@/components/admin/MultiImageUploadField";
 
 const CATEGORIES = ["LOGOS", "PEDIGREE", "BREEDING", "STUD", "ANIMATED", "BRANDING"];
 
@@ -11,6 +12,8 @@ export type DesignFormValues = {
   category?: string;
   description?: string;
   imageUrl?: string | null;
+  images?: string[];
+  price?: number | null;
   published?: boolean;
 };
 
@@ -36,7 +39,20 @@ export default function DesignForm({ initial }: { initial?: DesignFormValues }) 
         <label htmlFor="description">Description</label>
         <textarea id="description" name="description" required defaultValue={initial?.description} />
       </div>
-      <ImageUploadField name="imageUrl" defaultValue={initial?.imageUrl} />
+      <div className="field">
+        <label htmlFor="price">Price in USD (optional — leave blank to show no price)</label>
+        <input
+          id="price"
+          name="price"
+          type="number"
+          step="0.01"
+          min="0"
+          placeholder="e.g. 150.00"
+          defaultValue={initial?.price ?? ""}
+        />
+      </div>
+      <ImageUploadField name="imageUrl" defaultValue={initial?.imageUrl} label="Main image or video" />
+      <MultiImageUploadField name="images" defaultValue={initial?.images || []} />
       <div className="field" style={{ display: "flex", alignItems: "center", gap: 10 }}>
         <input type="checkbox" id="published" name="published" defaultChecked={initial?.published ?? true} style={{ width: "auto" }} />
         <label htmlFor="published" style={{ margin: 0 }}>

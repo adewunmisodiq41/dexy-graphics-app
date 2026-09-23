@@ -125,17 +125,28 @@ const designSchema = z.object({
   category: z.enum(["LOGOS", "PEDIGREE", "BREEDING", "STUD", "ANIMATED", "BRANDING"]),
   description: z.string().min(1),
   imageUrl: z.string().optional(),
+  images: z.array(z.string()).default([]),
+  price: z.number().nullable().optional(),
   published: z.boolean().default(true),
 });
 
 export async function saveDesignProject(formData: FormData) {
   await requireAdmin();
   const id = formData.get("id")?.toString();
+  const priceRaw = formData.get("price")?.toString();
+  let imagesRaw: string[] = [];
+  try {
+    imagesRaw = JSON.parse(formData.get("images")?.toString() || "[]");
+  } catch {
+    imagesRaw = [];
+  }
   const parsed = designSchema.parse({
     title: formData.get("title"),
     category: formData.get("category"),
     description: formData.get("description"),
     imageUrl: formData.get("imageUrl")?.toString() || undefined,
+    images: imagesRaw,
+    price: priceRaw ? parseFloat(priceRaw) : null,
     published: formData.get("published") === "on",
   });
 
@@ -146,6 +157,7 @@ export async function saveDesignProject(formData: FormData) {
   }
   revalidatePath("/admin/design");
   revalidatePath("/");
+  revalidatePath(`/design/${id}`);
   redirect("/admin/design");
 }
 

@@ -59,10 +59,10 @@ export default function ContactForm() {
         <label htmlFor="fBudget">Budget Range (optional)</label>
         <select id="fBudget" name="budget" defaultValue="">
           <option value="">Prefer not to say</option>
-          <option>Under ₦50,000</option>
-          <option>₦50,000 – ₦200,000</option>
-          <option>₦200,000 – ₦500,000</option>
-          <option>₦500,000+</option>
+          <option>Under $100</option>
+          <option>$100 – $500</option>
+          <option>$500 – $1,000</option>
+          <option>$1,000+</option>
         </select>
       </div>
 

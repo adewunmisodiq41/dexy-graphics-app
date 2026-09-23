@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import MediaThumb from "./MediaThumb";
 
 export type DesignItem = {
@@ -34,7 +35,6 @@ function glyphFor(title: string) {
 
 export default function PortfolioSection({ items }: { items: DesignItem[] }) {
   const [filter, setFilter] = useState("ALL");
-  const [active, setActive] = useState<DesignItem | null>(null);
 
   const visible = filter === "ALL" ? items : items.filter((i) => i.category === filter);
 
@@ -43,7 +43,7 @@ export default function PortfolioSection({ items }: { items: DesignItem[] }) {
       <div className="wrap">
         <div className="head-row">
           <h2>Designs that speak for your brand.</h2>
-          <p className="head-note">A running record of logo, banner, and brand work — filter by category or open any piece for the full brief.</p>
+          <p className="head-note">A running record of logo, banner, and brand work — filter by category, then open any piece to see the full project.</p>
         </div>
 
         <div className="filter-bar">
@@ -63,7 +63,7 @@ export default function PortfolioSection({ items }: { items: DesignItem[] }) {
         ) : (
           <div className="grid-portfolio">
             {visible.map((item) => (
-              <div className="p-card" key={item.id} onClick={() => setActive(item)}>
+              <Link className="p-card" key={item.id} href={`/design/${item.id}`}>
                 <div className="p-art">
                   {item.imageUrl ? (
                     <MediaThumb src={item.imageUrl} alt={item.title} sizes="(max-width:600px) 100vw, 33vw" />
@@ -78,37 +78,11 @@ export default function PortfolioSection({ items }: { items: DesignItem[] }) {
                   </div>
                   <span className="go">↗</span>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}
       </div>
-
-      {active && (
-        <div className="modal-backdrop" onClick={() => setActive(null)}>
-          <div className="modal-box" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setActive(null)} aria-label="Close">
-              ✕
-            </button>
-            <div className="modal-art">
-              {active.imageUrl ? (
-                <MediaThumb src={active.imageUrl} alt={active.title} sizes="640px" />
-              ) : (
-                <span className="glyph">{glyphFor(active.title)}</span>
-              )}
-            </div>
-            <span className="cat">{CATEGORY_LABEL[active.category]}</span>
-            <h3>{active.title}</h3>
-            <p>
-              {active.description}
-              {!active.imageUrl && " Placeholder artwork — replace with the real project image."}
-            </p>
-            <a href="#contact" className="btn btn-solid btn-sm" onClick={() => setActive(null)}>
-              Start a similar project →
-            </a>
-          </div>
-        </div>
-      )}
     </section>
   );
 }
